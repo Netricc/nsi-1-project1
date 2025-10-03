@@ -60,17 +60,21 @@ void Delete(json &j, int id) {
 
     cerr << "Task with ID " << id << " was not found!\n";
 }
-
+ 
 void Update() {
     // TODO
 }
-
+	
 void Search() {
     // TODO
 }
 
-void Read() {
-    // TODO
+void check(){
+	
+}
+
+void Read(json &j) {
+    cout << "Json File Content:\n" << j.dump(4) << endl;
 }
 
 void addTask(json &j, vector<Item> &tasks, const string &title) {
@@ -103,19 +107,22 @@ int main(int argc, char *argv[]) {
         j = json::array();
     }
 
-    if(argc < 3){
-    	cerr << "Usage: " << argv[0] << " <cmomand> [args]\n";
-	return 1;
-    }
-
     string command = argv[1];
     
     // Process command
+	if(argc < 3 && (command == "create" || command == "delete")){
+		cerr << "Usage: " << argv[0] << " <cmomand> [args]\n";
+		return 1;
+	}
     if (command == "create"){
         addTask(j, tasks, argv[2]);
     }else if(command == "delete"){
     	Delete(j, stoi(argv[2]));
-    }
+    }else if(command == "read"){
+		Read(j);
+	}else{
+		cout << "Command Not Found!\n";
+	}
     
     // Write back to file (overwrites with complete data)
     std::ofstream ofs("output.json");

@@ -3,7 +3,7 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++17
 
 # Target executable name
-TARGET = program
+TARGET = main
 
 # Source files
 SRCS = main.cpp
