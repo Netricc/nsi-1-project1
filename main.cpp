@@ -3,21 +3,29 @@
 #include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
+
 using namespace std;
 using json = nlohmann::json;
 
-// Global
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define BOLD    "\033[1m"
+
 int length = 0;
 
 struct Item {
     int id;
     string title;
     bool completed;
+    
     Item() : id(0), title(""), completed(false) {}
-    Item(int i, const string &t, bool c)
-        : id(i), title(t), completed(c) {}
+    Item(int i, const string &t, bool c) : id(i), title(t), completed(c) {}
 };
-
 
 
 int getLastItemID(const json &j) {
@@ -32,105 +40,186 @@ int getLastItemID(const json &j) {
 }
 
 
-
-
 void Create(const Item &task, json &j) {
     json newElement;
     newElement["Id"] = task.id;
     newElement["Title"] = task.title;
     newElement["Completed"] = task.completed;
-    j.push_back(newElement);  // Add to JSON array
+    j.push_back(newElement);
     ++length;
+    
+    cout << GREEN << "✓ Task created successfully!" << RESET << endl;
+    cout << CYAN << "  ID: " << BOLD << task.id << RESET << endl;
+    cout << CYAN << "  Title: " << RESET << task.title << endl << endl;
 }
 
 void Delete(json &j, int id) {
     if (!j.is_array()){
-    	cerr << "JSON is not an array\n";
-	return;
+        cerr << RED << "✗ Error: JSON is not an array" << RESET << endl;
+        return;
     }
-
 
     for (auto it = j.begin(); it != j.end(); ++it){
-    	if (it->contains("Id") && (*it)["Id"].get<int>() == id){
-		j.erase(it);
-		cout << "Task with ID " << id << " was deleted Successfully\n";
-		return;
-	}
+        if (it->contains("Id") && (*it)["Id"].get<int>() == id){
+            j.erase(it);
+            cout << GREEN << "✓ Task with ID " << BOLD << id << RESET 
+                 << GREEN << " was deleted successfully" << RESET << endl << endl;
+            return;
+        }
     }
 
-    cerr << "Task with ID " << id << " was not found!\n";
-}
- 
-void Update() {
-    // TODO
-}
-	
-void Search() {
-    // TODO
+    cerr << RED << "✗ Task with ID " << BOLD << id << RESET 
+         << RED << " was not found!" << RESET << endl << endl;
 }
 
-void check(){
-	
+void Update(json &j, int id, string content) {
+    if (!j.is_array()){
+        cerr << RED << "✗ Error: JSON is not an array" << RESET << endl;
+        return;
+    }
+    
+    for (auto &task : j){
+        if(task.contains("Id") && task["Id"].get<int>() == id){
+            task["Title"] = content;
+            cout << GREEN << "✓ Task with ID " << BOLD << id << RESET 
+                 << GREEN << " was updated successfully" << RESET << endl;
+            cout << CYAN << "  New content: " << RESET << content << endl << endl;
+            return;
+        }
+    }
+
+    cerr << RED << "✗ Task with ID " << BOLD << id << RESET 
+         << RED << " was not found!" << RESET << endl << endl;
+}
+
+void Search(json &j, int id) {
+    if(!j.is_array()){
+        cerr << RED << "✗ Error: JSON is not an array" << RESET << endl;
+        return;
+    }
+    
+    for (auto &task : j){
+        if(task.contains("Id") && task["Id"].get<int>() == id){
+            cout << endl << BOLD << MAGENTA << "═══ Task Details ═══" << RESET << endl;
+            cout << CYAN << "ID: " << RESET << BOLD << task["Id"].get<int>() << RESET << endl;
+            cout << CYAN << "Title: " << RESET << task["Title"].get<string>() << endl;
+            cout << CYAN << "Status: " << RESET 
+                 << (task["Completed"].get<bool>() ? GREEN "✓ Completed" : YELLOW "○ Not Completed") 
+                 << RESET << endl;
+            cout << BOLD << MAGENTA << "═══════════════════" << RESET << endl << endl;
+            return;
+        }
+    }
+    
+    cerr << RED << "✗ Task with ID " << BOLD << id << RESET 
+         << RED << " was not found!" << RESET << endl << endl;
+}
+
+void check(json &j, int id){
+    if(!j.is_array()){
+        cerr << RED << "✗ Error: JSON is not an array" << RESET << endl;
+        return;
+    }
+    
+    for (auto &task : j){
+        if (task.contains("Id") && task["Id"].get<int>() == id){
+            bool newStatus = !task["Completed"].get<bool>();
+            task["Completed"] = newStatus;
+            cout << GREEN << "✓ Task with ID " << BOLD << id << RESET 
+                 << GREEN << " marked as " << RESET 
+                 << (newStatus ? GREEN BOLD "Completed" : YELLOW BOLD "Not Completed") 
+                 << RESET << endl << endl;
+            return;
+        }
+    }
+    
+    cerr << RED << "✗ Task with ID " << BOLD << id << RESET 
+         << RED << " was not found!" << RESET << endl << endl;
 }
 
 void Read(json &j) {
-    cout << "Json File Content:\n" << j.dump(4) << endl;
+    cout << endl << BOLD << BLUE << "═══════════════════════════" << RESET << endl;
+    cout << BOLD << BLUE << "    JSON File Content" << RESET << endl;
+    cout << BOLD << BLUE << "═══════════════════════════" << RESET << endl << endl;
+    cout << j.dump(4) << endl << endl;
 }
 
 void addTask(json &j, vector<Item> &tasks, const string &title) {
     int lastId = getLastItemID(j);
-    int newId = lastId + 1;  // give next ID
+    int newId = lastId + 1;
     tasks.push_back(Item(newId, title, false));
     Create(tasks.back(), j);
 }
+
 
 int main(int argc, char *argv[]) {
     vector<Item> tasks;
     json j;
     
-    // Read existing file first
-    std::ifstream ifs("output.json");
+    ifstream ifs("output.json");
     if (ifs.is_open()) {
         try {
-            ifs >> j;  // Parse existing JSON
-            // Make sure it's an array
+            ifs >> j;
             if (!j.is_array()) {
                 j = json::array();
             }
         } catch (json::parse_error& e) {
-            // If file is empty or invalid, start with empty array
             j = json::array();
         }
         ifs.close();
     } else {
-        // File doesn't exist, start with empty array
         j = json::array();
+    }
+
+    if (argc < 2) {
+        cerr << RED << "✗ Error: No command specified" << RESET << endl;
+        cerr << YELLOW << "Usage: " << RESET << argv[0] << " <command> [args]" << endl << endl;
+        return 1;
     }
 
     string command = argv[1];
     
-    // Process command
-	if(argc < 3 && (command == "create" || command == "delete")){
-		cerr << "Usage: " << argv[0] << " <cmomand> [args]\n";
-		return 1;
-	}
-    if (command == "create"){
-        addTask(j, tasks, argv[2]);
-    }else if(command == "delete"){
-    	Delete(j, stoi(argv[2]));
-    }else if(command == "read"){
-		Read(j);
-	}else{
-		cout << "Command Not Found!\n";
-	}
-    
-    // Write back to file (overwrites with complete data)
-    std::ofstream ofs("output.json");
-    if (!ofs.is_open()) {
-        std::cerr << "Could not open file for writing\n";
+    if(argc < 3 && (command == "create" || command == "delete" || command == "check" || command == "search")){
+        cerr << RED << "✗ Error: Missing arguments" << RESET << endl;
+        cerr << YELLOW << "Usage: " << RESET << argv[0] << " <command> [args]" << endl << endl;
         return 1;
     }
-    ofs << j.dump(4);  // dump(4) for pretty printing with 4-space indent
+    
+    if(argc < 4 && command == "update"){
+        cerr << RED << "✗ Error: Missing arguments" << RESET << endl;
+        cerr << YELLOW << "Usage: " << RESET << argv[0] << " update [ID] [New-Content]" << endl << endl;
+        return 1;
+    }
+    
+    if (command == "create"){
+        addTask(j, tasks, argv[2]);
+    }
+    else if(command == "delete"){
+        Delete(j, stoi(argv[2]));
+    }
+    else if(command == "read"){
+        Read(j);
+    }
+    else if(command == "check"){
+        check(j, stoi(argv[2]));
+    }
+    else if(command == "update"){
+        Update(j, stoi(argv[2]), argv[3]);
+    }
+    else if(command == "search"){
+        Search(j, stoi(argv[2]));
+    }
+    else{
+        cerr << RED << "✗ Command not found: " << RESET << command << endl << endl;
+        return 1;
+    }
+    
+    ofstream ofs("output.json");
+    if (!ofs.is_open()) {
+        cerr << RED << "✗ Error: Could not open file for writing" << RESET << endl;
+        return 1;
+    }
+    ofs << j.dump(4);
     ofs.close();
     
     return 0;
