@@ -3,464 +3,378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation - Gestionnaire de Tâches</title>
+    <title>Documentation - Gestionnaire de Tâches C++</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0ea5e9',
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-white">
-    <div class="flex">
+<body class="bg-gray-50">
+    <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <aside class="fixed top-0 left-0 h-screen w-64 border-r border-slate-200 bg-white overflow-y-auto">
-            <div class="p-8">
-                <div class="mb-8">
-                    <h1 class="text-xl font-bold text-slate-900">TODO Manager</h1>
-                    <p class="text-sm text-slate-600 mt-1">Documentation v1.0</p>
+        <aside class="fixed top-0 left-0 h-screen w-72 bg-white border-r-2 border-gray-300 overflow-y-auto">
+            <div class="p-6 border-b-2 border-gray-300">
+                <h1 class="text-2xl font-bold text-gray-900">Gestionnaire de Tâches</h1>
+                <p class="text-sm text-gray-600 mt-1">Documentation Technique C++</p>
+                <p class="text-xs text-gray-500 mt-1">Version 1.0.0</p>
+            </div>
+
+            <nav class="p-6">
+                <div class="mb-6">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">DÉMARRAGE</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#introduction" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">Introduction</a></li>
+                        <li><a href="#installation" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">Installation</a></li>
+                        <li><a href="#compilation" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">Compilation</a></li>
+                        <li><a href="#usage" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">Utilisation</a></li>
+                    </ul>
                 </div>
 
-                <nav class="space-y-8">
-                    <div>
-                        <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-wide mb-3">Démarrage</h3>
-                        <ul class="space-y-2">
-                            <li><a href="#introduction" class="text-sm text-slate-700 hover:text-slate-900 block">Introduction</a></li>
-                            <li><a href="#installation" class="text-sm text-slate-700 hover:text-slate-900 block">Installation</a></li>
-                            <li><a href="#compilation" class="text-sm text-slate-700 hover:text-slate-900 block">Compilation</a></li>
-                        </ul>
-                    </div>
+                <div class="mb-6">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">RÉFÉRENCE API</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#create" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">create</a></li>
+                        <li><a href="#read" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">read</a></li>
+                        <li><a href="#update" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">update</a></li>
+                        <li><a href="#delete" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">delete</a></li>
+                        <li><a href="#check" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">check</a></li>
+                        <li><a href="#search" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">search</a></li>
+                    </ul>
+                </div>
 
-                    <div>
-                        <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-wide mb-3">Commandes</h3>
-                        <ul class="space-y-2">
-                            <li><a href="#create" class="text-sm text-slate-700 hover:text-slate-900 block">create</a></li>
-                            <li><a href="#read" class="text-sm text-slate-700 hover:text-slate-900 block">read</a></li>
-                            <li><a href="#update" class="text-sm text-slate-700 hover:text-slate-900 block">update</a></li>
-                            <li><a href="#delete" class="text-sm text-slate-700 hover:text-slate-900 block">delete</a></li>
-                            <li><a href="#check" class="text-sm text-slate-700 hover:text-slate-900 block">check</a></li>
-                            <li><a href="#search" class="text-sm text-slate-700 hover:text-slate-900 block">search</a></li>
-                        </ul>
-                    </div>
+                <div class="mb-6">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">ARCHITECTURE</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#structure" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">Structure des données</a></li>
+                        <li><a href="#functions" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">Fonctions internes</a></li>
+                        <li><a href="#storage" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">Système de stockage</a></li>
+                    </ul>
+                </div>
 
-                    <div>
-                        <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-wide mb-3">Architecture</h3>
-                        <ul class="space-y-2">
-                            <li><a href="#structure" class="text-sm text-slate-700 hover:text-slate-900 block">Structure</a></li>
-                            <li><a href="#functions" class="text-sm text-slate-700 hover:text-slate-900 block">Fonctions</a></li>
-                            <li><a href="#data" class="text-sm text-slate-700 hover:text-slate-900 block">Données</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-wide mb-3">Ressources</h3>
-                        <ul class="space-y-2">
-                            <li><a href="#examples" class="text-sm text-slate-700 hover:text-slate-900 block">Exemples</a></li>
-                            <li><a href="#troubleshooting" class="text-sm text-slate-700 hover:text-slate-900 block">Dépannage</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
+                <div class="mb-6">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">ANNEXES</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#examples" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">Exemples d'utilisation</a></li>
+                        <li><a href="#errors" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">Codes d'erreur</a></li>
+                        <li><a href="#troubleshooting" class="block py-2 px-3 text-sm text-gray-700 hover:bg-gray-100 rounded">Dépannage</a></li>
+                    </ul>
+                </div>
+            </nav>
         </aside>
 
         <!-- Main Content -->
-        <main class="ml-64 flex-1">
-            <div class="max-w-5xl mx-auto px-8 py-16">
+        <main class="ml-72 flex-1">
+            <div class="max-w-5xl px-12 py-12">
                 <!-- Header -->
-                <header class="mb-16">
-                    <h1 class="text-5xl font-bold text-slate-900 mb-4">Gestionnaire de Tâches</h1>
-                    <p class="text-xl text-slate-600">Un système de gestion de tâches en C++ utilisant JSON pour la persistance des données.</p>
+                <header class="mb-12 pb-8 border-b-2 border-gray-300">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-3">Documentation du Gestionnaire de Tâches</h1>
+                    <p class="text-lg text-gray-700">Système de gestion de tâches en C++ utilisant la bibliothèque nlohmann/json pour la persistance des données.</p>
                 </header>
 
                 <!-- Introduction -->
-                <section id="introduction" class="mb-16 scroll-mt-20">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Introduction</h2>
-                    <p class="text-lg text-slate-700 mb-6">Ce projet est un gestionnaire de tâches développé en C++ qui permet de créer, lire, mettre à jour, supprimer et gérer des tâches stockées dans un fichier JSON.</p>
+                <section id="introduction" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-300">1. Introduction</h2>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                        <div class="border border-slate-200 rounded-lg p-6">
-                            <h3 class="font-semibold text-slate-900 mb-2">Interface CLI</h3>
-                            <p class="text-sm text-slate-600">Interface en ligne de commande simple et intuitive avec affichage coloré.</p>
-                        </div>
-                        <div class="border border-slate-200 rounded-lg p-6">
-                            <h3 class="font-semibold text-slate-900 mb-2">Persistance JSON</h3>
-                            <p class="text-sm text-slate-600">Stockage des données dans un format JSON standard et lisible.</p>
-                        </div>
-                        <div class="border border-slate-200 rounded-lg p-6">
-                            <h3 class="font-semibold text-slate-900 mb-2">CRUD Complet</h3>
-                            <p class="text-sm text-slate-600">Toutes les opérations de base : Create, Read, Update, Delete.</p>
-                        </div>
-                        <div class="border border-slate-200 rounded-lg p-6">
-                            <h3 class="font-semibold text-slate-900 mb-2">Gestion d'État</h3>
-                            <p class="text-sm text-slate-600">Suivi du statut de complétion de chaque tâche.</p>
-                        </div>
-                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">1.1 Description générale</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">Ce projet implémente un système complet de gestion de tâches (TODO List) en C++. Il permet d'effectuer toutes les opérations CRUD (Create, Read, Update, Delete) sur des tâches stockées de manière persistante dans un fichier JSON. Le programme fonctionne en ligne de commande et utilise des codes couleurs ANSI pour améliorer la lisibilité des sorties.</p>
+
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">1.2 Caractéristiques principales</h3>
+                    <table class="w-full border-2 border-gray-300 mt-4">
+                        <thead>
+                            <tr class="bg-gray-200 border-b-2 border-gray-300">
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Fonctionnalité</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-medium text-gray-900">Création de tâches</td>
+                                <td class="py-3 px-4 text-gray-700">Ajout de nouvelles tâches avec génération automatique d'ID</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-medium text-gray-900">Lecture des tâches</td>
+                                <td class="py-3 px-4 text-gray-700">Affichage formaté de toutes les tâches</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-medium text-gray-900">Mise à jour</td>
+                                <td class="py-3 px-4 text-gray-700">Modification du titre des tâches existantes</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-medium text-gray-900">Suppression</td>
+                                <td class="py-3 px-4 text-gray-700">Retrait de tâches par identifiant</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-medium text-gray-900">Gestion du statut</td>
+                                <td class="py-3 px-4 text-gray-700">Basculement du statut de complétion</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-medium text-gray-900">Recherche</td>
+                                <td class="py-3 px-4 text-gray-700">Consultation détaillée d'une tâche spécifique</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">1.3 Technologies utilisées</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                        <li>Langage : C++ (Standard C++11 minimum)</li>
+                        <li>Bibliothèque JSON : nlohmann/json (v3.x)</li>
+                        <li>Stockage : Fichier JSON (output.json)</li>
+                        <li>Interface : Ligne de commande (CLI)</li>
+                    </ul>
                 </section>
 
                 <!-- Installation -->
-                <section id="installation" class="mb-16 scroll-mt-20">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Installation</h2>
+                <section id="installation" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-300">2. Installation</h2>
                     
-                    <h3 class="text-xl font-semibold text-slate-900 mt-8 mb-3">Prérequis</h3>
-                    <ul class="list-disc list-inside text-slate-700 space-y-2">
-                        <li>Compilateur C++ (g++, clang++)</li>
-                        <li>Bibliothèque nlohmann/json</li>
-                        <li>Standard C++11 ou supérieur</li>
-                    </ul>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">2.1 Prérequis système</h3>
+                    <table class="w-full border-2 border-gray-300 mt-4">
+                        <thead>
+                            <tr class="bg-gray-200 border-b-2 border-gray-300">
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Composant</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Requis</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-medium text-gray-900">Compilateur C++</td>
+                                <td class="py-3 px-4 text-gray-700">g++ 4.8+ ou clang++ 3.3+</td>
+                                <td class="py-3 px-4 text-gray-700">Support C++11 minimum</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-medium text-gray-900">nlohmann/json</td>
+                                <td class="py-3 px-4 text-gray-700">Version 3.0+</td>
+                                <td class="py-3 px-4 text-gray-700">Bibliothèque header-only</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-medium text-gray-900">Système d'exploitation</td>
+                                <td class="py-3 px-4 text-gray-700">Linux, macOS, Windows</td>
+                                <td class="py-3 px-4 text-gray-700">Terminal avec support ANSI</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                    <h3 class="text-xl font-semibold text-slate-900 mt-8 mb-3">Installation de nlohmann/json</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-sm text-slate-800"><code># Ubuntu/Debian
-sudo apt-get install nlohmann-json3-dev
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">2.2 Installation de nlohmann/json</h3>
+                    
+                    <p class="text-gray-700 mb-3 font-semibold">Ubuntu/Debian :</p>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800 mb-4">
+                        sudo apt-get update<br>
+                        sudo apt-get install nlohmann-json3-dev
+                    </div>
 
-# macOS
-brew install nlohmann-json
+                    <p class="text-gray-700 mb-3 font-semibold">macOS :</p>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800 mb-4">
+                        brew install nlohmann-json
+                    </div>
 
-# Ou télécharger depuis GitHub
-# https://github.com/nlohmann/json</code></pre>
+                    <p class="text-gray-700 mb-3 font-semibold">Installation manuelle :</p>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800">
+                        # Télécharger json.hpp depuis :<br>
+                        # https://github.com/nlohmann/json/releases<br>
+                        # Placer le fichier dans le répertoire du projet
                     </div>
                 </section>
 
                 <!-- Compilation -->
-                <section id="compilation" class="mb-16 scroll-mt-20">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Compilation</h2>
-                    <p class="text-slate-700 mb-4">Compilez le programme avec les commandes suivantes :</p>
+                <section id="compilation" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-300">3. Compilation</h2>
                     
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-sm text-slate-800"><code>g++ -std=c++11 main.cpp -o todo
-
-# Avec optimisations
-g++ -std=c++11 -O2 main.cpp -o todo</code></pre>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">3.1 Compilation de base</h3>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800 mb-4">
+                        g++ -std=c++11 main.cpp -o todo
                     </div>
 
-                    <div class="mt-4 bg-sky-50 border border-sky-200 rounded-lg p-4">
-                        <p class="text-sm text-sky-900"><strong>Note :</strong> Le fichier output.json sera créé automatiquement s'il n'existe pas.</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">3.2 Compilation avec optimisations</h3>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800 mb-4">
+                        g++ -std=c++11 -O2 -Wall main.cpp -o todo
                     </div>
+
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">3.3 Options de compilation</h3>
+                    <table class="w-full border-2 border-gray-300 mt-4">
+                        <thead>
+                            <tr class="bg-gray-200 border-b-2 border-gray-300">
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Option</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">-std=c++11</td>
+                                <td class="py-3 px-4 text-gray-700">Active le standard C++11 (requis)</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">-O2</td>
+                                <td class="py-3 px-4 text-gray-700">Active les optimisations de niveau 2</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">-Wall</td>
+                                <td class="py-3 px-4 text-gray-700">Active tous les avertissements</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">-o todo</td>
+                                <td class="py-3 px-4 text-gray-700">Spécifie le nom de l'exécutable</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Usage -->
+                <section id="usage" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-300">4. Utilisation générale</h2>
+                    
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">4.1 Syntaxe générale</h3>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800 mb-4">
+                        ./todo &lt;commande&gt; [arguments]
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">4.2 Liste des commandes</h3>
+                    <table class="w-full border-2 border-gray-300 mt-4">
+                        <thead>
+                            <tr class="bg-gray-200 border-b-2 border-gray-300">
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Commande</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Arguments</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">create</td>
+                                <td class="py-3 px-4 font-mono text-sm text-gray-700">&lt;titre&gt;</td>
+                                <td class="py-3 px-4 text-gray-700">Crée une nouvelle tâche</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">read</td>
+                                <td class="py-3 px-4 font-mono text-sm text-gray-700">-</td>
+                                <td class="py-3 px-4 text-gray-700">Affiche toutes les tâches</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">update</td>
+                                <td class="py-3 px-4 font-mono text-sm text-gray-700">&lt;id&gt; &lt;titre&gt;</td>
+                                <td class="py-3 px-4 text-gray-700">Modifie une tâche existante</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">delete</td>
+                                <td class="py-3 px-4 font-mono text-sm text-gray-700">&lt;id&gt;</td>
+                                <td class="py-3 px-4 text-gray-700">Supprime une tâche</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">check</td>
+                                <td class="py-3 px-4 font-mono text-sm text-gray-700">&lt;id&gt;</td>
+                                <td class="py-3 px-4 text-gray-700">Bascule le statut de complétion</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">search</td>
+                                <td class="py-3 px-4 font-mono text-sm text-gray-700">&lt;id&gt;</td>
+                                <td class="py-3 px-4 text-gray-700">Recherche une tâche par ID</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </section>
 
                 <!-- Create Command -->
-                <section id="create" class="mb-16 scroll-mt-20">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">create</h2>
-                    <p class="text-slate-700 mb-4">Crée une nouvelle tâche avec un titre spécifié.</p>
+                <section id="create" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-300">5. Commande create</h2>
+                    
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">5.1 Description</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">La commande <code class="bg-gray-100 px-2 py-1 border border-gray-300 font-mono text-sm">create</code> permet de créer une nouvelle tâche dans le système. L'identifiant est généré automatiquement en incrémentant le dernier ID existant. Par défaut, la tâche est créée avec le statut "non complétée".</p>
 
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">./todo create &lt;titre&gt;</code>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">5.2 Syntaxe</h3>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800 mb-4">
+                        ./todo create &lt;titre&gt;
                     </div>
 
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Paramètres</h3>
-                    <table class="w-full border-collapse">
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">5.3 Paramètres</h3>
+                    <table class="w-full border-2 border-gray-300 mt-4">
                         <thead>
-                            <tr class="border-b border-slate-200">
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètre</th>
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Type</th>
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
+                            <tr class="bg-gray-200 border-b-2 border-gray-300">
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Paramètre</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Type</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Obligatoire</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Description</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b border-slate-200">
-                                <td class="py-3 px-4 text-sm text-slate-700"><code>titre</code></td>
-                                <td class="py-3 px-4 text-sm text-slate-700">string</td>
-                                <td class="py-3 px-4 text-sm text-slate-700">Le titre de la tâche</td>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">titre</td>
+                                <td class="py-3 px-4 text-gray-700">string</td>
+                                <td class="py-3 px-4 text-gray-700">Oui</td>
+                                <td class="py-3 px-4 text-gray-700">Le titre de la tâche à créer</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-sm text-slate-800"><code>./todo create "Acheter du pain"
-
-# Sortie:
-✓ Task created successfully!
-  ID: 1
-  Title: Acheter du pain</code></pre>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">5.4 Exemple d'utilisation</h3>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800 mb-4">
+                        $ ./todo create "Acheter du pain"<br><br>
+                        ✓ Task created successfully!<br>
+                        &nbsp;&nbsp;ID: 1<br>
+                        &nbsp;&nbsp;Title: Acheter du pain
                     </div>
 
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">void Create(const Item &task, json &j)</code>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">5.5 Valeur de retour</h3>
+                    <table class="w-full border-2 border-gray-300 mt-4">
+                        <thead>
+                            <tr class="bg-gray-200 border-b-2 border-gray-300">
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Code</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Signification</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">0</td>
+                                <td class="py-3 px-4 text-gray-700">Succès - Tâche créée avec succès</td>
+                            </tr>
+                            <tr class="border-b border-gray-300">
+                                <td class="py-3 px-4 font-mono text-sm text-gray-900">1</td>
+                                <td class="py-3 px-4 text-gray-700">Erreur - Arguments manquants</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">5.6 Fonction interne associée</h3>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800 mb-4">
+                        void Create(const Item &task, json &j)
                     </div>
-                    <p class="text-sm text-slate-600 mt-2">Ajoute une nouvelle tâche au tableau JSON et incrémente le compteur.</p>
+                    <p class="text-gray-700 leading-relaxed">Cette fonction ajoute une nouvelle entrée au tableau JSON et incrémente le compteur global de tâches.</p>
                 </section>
 
                 <!-- Read Command -->
-                <section id="read" class="mb-16 scroll-mt-20">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">read</h2>
-                    <p class="text-slate-700 mb-4">Affiche toutes les tâches stockées dans le fichier JSON.</p>
+                <section id="read" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-300">6. Commande read</h2>
+                    
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">6.1 Description</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">La commande <code class="bg-gray-100 px-2 py-1 border border-gray-300 font-mono text-sm">read</code> affiche l'intégralité du contenu du fichier JSON contenant toutes les tâches. L'affichage est formaté avec une indentation de 4 espaces pour une meilleure lisibilité.</p>
 
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">./todo read</code>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">6.2 Syntaxe</h3>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800 mb-4">
+                        ./todo read
                     </div>
 
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-sm text-slate-800"><code>./todo read
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">6.3 Paramètres</h3>
+                    <p class="text-gray-700 mb-4">Cette commande ne requiert aucun paramètre.</p>
 
-# Sortie:
-═══════════════════════════
-    JSON File Content
-═══════════════════════════
-
-[
-    {
-        "Id": 1,
-        "Title": "Acheter du pain",
-        "Completed": false
-    }
-]</code></pre>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">6.4 Exemple d'utilisation</h3>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800 mb-4">
+                        $ ./todo read<br><br>
+                        ═══════════════════════════<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;JSON File Content<br>
+                        ═══════════════════════════<br><br>
+                        [<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Id": 1,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Title": "Acheter du pain",<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Completed": false<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        ]
                     </div>
 
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">void Read(json &j)</code>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">6.5 Fonction interne associée</h3>
+                    <div class="bg-gray-100 border-2 border-gray-300 p-4 font-mono text-sm text-gray-800 mb-4">
+                        void Read(json &j)
                     </div>
-                    <p class="text-sm text-slate-600 mt-2">Affiche le contenu du fichier JSON avec une indentation de 4 espaces.</p>
+                    <p class="text-gray-700 leading-relaxed">Cette fonction utilise la méthode <code class="bg-gray-100 px-2 py-1 border border-gray-300 font-mono text-sm">dump(4)</code> pour afficher le contenu JSON avec indentation.</p>
                 </section>
 
                 <!-- Update Command -->
-                <section id="update" class="mb-16 scroll-mt-20">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">update</h2>
-                    <p class="text-slate-700 mb-4">Met à jour le titre d'une tâche existante.</p>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">./todo update &lt;id&gt; &lt;nouveau_titre&gt;</code>
-                    </div>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Paramètres</h3>
-                    <table class="w-full border-collapse">
-                        <thead>
-                            <tr class="border-b border-slate-200">
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètre</th>
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Type</th>
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b border-slate-200">
-                                <td class="py-3 px-4 text-sm text-slate-700"><code>id</code></td>
-                                <td class="py-3 px-4 text-sm text-slate-700">int</td>
-                                <td class="py-3 px-4 text-sm text-slate-700">L'identifiant de la tâche</td>
-                            </tr>
-                            <tr class="border-b border-slate-200">
-                                <td class="py-3 px-4 text-sm text-slate-700"><code>nouveau_titre</code></td>
-                                <td class="py-3 px-4 text-sm text-slate-700">string</td>
-                                <td class="py-3 px-4 text-sm text-slate-700">Le nouveau titre</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-sm text-slate-800"><code>./todo update 1 "Acheter du pain et du lait"
-
-# Sortie:
-✓ Task with ID 1 was updated successfully
-  New content: Acheter du pain et du lait</code></pre>
-                    </div>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">void Update(json &j, int id, string content)</code>
-                    </div>
-                    <p class="text-sm text-slate-600 mt-2">Parcourt le tableau JSON et met à jour le titre de la tâche correspondante.</p>
-                </section>
-
-                <!-- Delete Command -->
-                <section id="delete" class="mb-16 scroll-mt-20">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">delete</h2>
-                    <p class="text-slate-700 mb-4">Supprime une tâche du système.</p>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">./todo delete &lt;id&gt;</code>
-                    </div>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Paramètres</h3>
-                    <table class="w-full border-collapse">
-                        <thead>
-                            <tr class="border-b border-slate-200">
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètre</th>
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Type</th>
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b border-slate-200">
-                                <td class="py-3 px-4 text-sm text-slate-700"><code>id</code></td>
-                                <td class="py-3 px-4 text-sm text-slate-700">int</td>
-                                <td class="py-3 px-4 text-sm text-slate-700">L'identifiant de la tâche à supprimer</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-sm text-slate-800"><code>./todo delete 1
-
-# Sortie:
-✓ Task with ID 1 was deleted successfully</code></pre>
-                    </div>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">void Delete(json &j, int id)</code>
-                    </div>
-                    <p class="text-sm text-slate-600 mt-2">Utilise un itérateur pour supprimer l'élément correspondant à l'ID.</p>
-                </section>
-
-                <!-- Check Command -->
-                <section id="check" class="mb-16 scroll-mt-20">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">check</h2>
-                    <p class="text-slate-700 mb-4">Bascule le statut de complétion d'une tâche.</p>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">./todo check &lt;id&gt;</code>
-                    </div>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Paramètres</h3>
-                    <table class="w-full border-collapse">
-                        <thead>
-                            <tr class="border-b border-slate-200">
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètre</th>
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Type</th>
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b border-slate-200">
-                                <td class="py-3 px-4 text-sm text-slate-700"><code>id</code></td>
-                                <td class="py-3 px-4 text-sm text-slate-700">int</td>
-                                <td class="py-3 px-4 text-sm text-slate-700">L'identifiant de la tâche</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-sm text-slate-800"><code># Marquer comme complétée
-./todo check 1
-✓ Task with ID 1 marked as Completed
-
-# Marquer comme non complétée
-./todo check 1
-✓ Task with ID 1 marked as Not Completed</code></pre>
-                    </div>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">void check(json &j, int id)</code>
-                    </div>
-                    <p class="text-sm text-slate-600 mt-2">Inverse la valeur booléenne du champ "Completed".</p>
-                </section>
-
-                <!-- Search Command -->
-                <section id="search" class="mb-16 scroll-mt-20">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">search</h2>
-                    <p class="text-slate-700 mb-4">Recherche et affiche les détails d'une tâche spécifique.</p>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">./todo search &lt;id&gt;</code>
-                    </div>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Paramètres</h3>
-                    <table class="w-full border-collapse">
-                        <thead>
-                            <tr class="border-b border-slate-200">
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètre</th>
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Type</th>
-                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b border-slate-200">
-                                <td class="py-3 px-4 text-sm text-slate-700"><code>id</code></td>
-                                <td class="py-3 px-4 text-sm text-slate-700">int</td>
-                                <td class="py-3 px-4 text-sm text-slate-700">L'identifiant de la tâche à rechercher</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-sm text-slate-800"><code>./todo search 1
-
-# Sortie:
-═══ Task Details ═══
-ID: 1
-Title: Acheter du pain
-Status: ○ Not Completed
-═══════════════════</code></pre>
-                    </div>
-
-                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                        <code class="text-sm text-slate-800">void Search(json &j, int id)</code>
-                    </div>
-                    <p class="text-sm text-slate-600 mt-2">Parcourt le tableau JSON et affiche les informations de la tâche trouvée.</p>
-                </section>
-
-                <!-- Structure -->
-                <section id="structure" class="mb-16 scroll-mt-20">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Structure du Projet</h2>
+                <section id="update" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-300">7. Commande update</h2>
                     
-                    <h3 class="text-xl font-semibold text-slate-900 mt-8 mb-3">Structure Item</h3>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-sm text-slate-800"><code>struct Item {
-    int id;
-    string title;
-    bool completed;
-};</code></pre>
-                    </div>
-                    <p class="text-slate-600 mt-3">Représente une tâche avec trois attributs : identifiant, titre et statut de complétion.</p>
-
-                    <h3 class="text-xl font-semibold text-slate-900 mt-8 mb-3">Format JSON</h3>
-                    <p class="text-slate-700 mb-4">Les données sont stockées dans <code class="text-sm bg-slate-100 px-2 py-1 rounded">output.json</code> :</p>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-sm text-slate-800"><code>[
-    {
-        "Id": 1,
-        "Title": "Titre de la tâche",
-        "Completed": false
-    },
-    {
-        "Id": 2,
-        "Title": "Autre tâche",
-        "Completed": true
-    }
-]</code></pre>
-                    </div>
-                </section>
-
-                <!-- Functions -->
-                <section id="functions" class="mb-16 scroll-mt-20">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Fonctions Principales</h2>
-                    
-                    <div class="overflow-x-auto">
-                        <table class="w-full border-collapse">
-                            <thead>
-                                <tr class="border-b border-slate-200">
-                                    <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Fonction</th>
-                                    <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
-                                    <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètres</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b border-slate-200">
-                                    <td class="py-3 px-4 text-sm"><code>getLastItemID()</code></td>
-                                    <td class="py-3 px-4 text-sm text-slate-700">Récupère l'ID de la dernière tâche</td>
-                                    <td class="py-3 px-4 text-sm text-slate-600">const json &j</td>
-                                </tr>
-                                <tr class="border-b border-slate-200">
-                                    <td class="py-3 px-4 text-sm"><code>Create()</code></td>
-                                    <td class="py-3 px-4 text-sm text-slate-700">Crée une nouvelle tâche</td>
-                                    <td class="py-3 px-4 text-sm text-slate-600">const Item &task, json &j</td>
+                    <h3 class="text-xl font-semibold text-gray-900 mt-6
