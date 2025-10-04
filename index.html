@@ -4,716 +4,463 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation - Gestionnaire de Tâches</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --secondary: #64748b;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --bg: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-code: #334155;
-            --text: #e2e8f0;
-            --text-secondary: #94a3b8;
-            --border: #334155;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            width: 280px;
-            background: var(--bg-secondary);
-            padding: 2rem;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            border-right: 1px solid var(--border);
-        }
-
-        .sidebar h1 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            margin-bottom: 2rem;
-        }
-
-        .nav-section {
-            margin-bottom: 2rem;
-        }
-
-        .nav-section h3 {
-            color: var(--text);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-
-        .nav-link {
-            display: block;
-            padding: 0.5rem 0.75rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.2s;
-            margin-bottom: 0.25rem;
-            font-size: 0.9rem;
-        }
-
-        .nav-link:hover {
-            background: var(--bg-code);
-            color: var(--primary);
-            padding-left: 1rem;
-        }
-
-        .content {
-            margin-left: 280px;
-            padding: 3rem;
-            flex: 1;
-            max-width: 1200px;
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            padding: 3rem;
-            border-radius: 12px;
-            margin-bottom: 3rem;
-            box-shadow: 0 10px 40px rgba(37, 99, 235, 0.3);
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .section {
-            margin-bottom: 3rem;
-            scroll-margin-top: 2rem;
-        }
-
-        .section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 0.5rem;
-        }
-
-        .section h3 {
-            font-size: 1.5rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: var(--text);
-        }
-
-        .card {
-            background: var(--bg-secondary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border);
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .badge-success { background: var(--success); color: white; }
-        .badge-warning { background: var(--warning); color: white; }
-        .badge-danger { background: var(--danger); color: white; }
-        .badge-info { background: var(--primary); color: white; }
-
-        .code-block {
-            background: var(--bg-code);
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1rem 0;
-            border-left: 4px solid var(--primary);
-        }
-
-        .code-block code {
-            font-family: 'Courier New', monospace;
-            color: #a5d6ff;
-            font-size: 0.9rem;
-        }
-
-        .command {
-            background: var(--bg-code);
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            color: var(--success);
-            font-size: 0.9rem;
-        }
-
-        .param {
-            color: var(--warning);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-
-        table th,
-        table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        table th {
-            background: var(--bg-code);
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        table tr:hover {
-            background: var(--bg-secondary);
-        }
-
-        .alert {
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-            border-left: 4px solid;
-        }
-
-        .alert-info {
-            background: rgba(37, 99, 235, 0.1);
-            border-color: var(--primary);
-            color: var(--text);
-        }
-
-        .alert-warning {
-            background: rgba(245, 158, 11, 0.1);
-            border-color: var(--warning);
-            color: var(--text);
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .feature-card {
-            background: var(--bg-secondary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-        }
-
-        .feature-card h4 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .function-signature {
-            background: var(--bg-code);
-            padding: 1rem;
-            border-radius: 6px;
-            font-family: 'Courier New', monospace;
-            color: #79c0ff;
-            margin: 1rem 0;
-            font-size: 0.95rem;
-        }
-
-        .param-list {
-            list-style: none;
-            margin: 1rem 0;
-        }
-
-        .param-list li {
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
-            background: var(--bg-secondary);
-            border-radius: 4px;
-        }
-
-        .param-name {
-            color: var(--warning);
-            font-family: 'Courier New', monospace;
-            font-weight: 600;
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--primary);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
-            transition: all 0.3s;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .back-to-top:hover {
-            background: var(--primary-dark);
-            transform: translateY(-5px);
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-            .content {
-                margin-left: 0;
-                padding: 1.5rem;
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ea5e9',
+                    }
+                }
             }
         }
-    </style>
+    </script>
 </head>
-<body>
-    <div class="container">
-        <nav class="sidebar">
-            <h1>📋 TODO Manager</h1>
-            <p class="subtitle">Documentation Complète</p>
-
-            <div class="nav-section">
-                <h3>Introduction</h3>
-                <a href="#introduction" class="nav-link">Vue d'ensemble</a>
-                <a href="#installation" class="nav-link">Installation</a>
-                <a href="#compilation" class="nav-link">Compilation</a>
-            </div>
-
-            <div class="nav-section">
-                <h3>Commandes</h3>
-                <a href="#create" class="nav-link">create</a>
-                <a href="#read" class="nav-link">read</a>
-                <a href="#update" class="nav-link">update</a>
-                <a href="#delete" class="nav-link">delete</a>
-                <a href="#check" class="nav-link">check</a>
-                <a href="#search" class="nav-link">search</a>
-            </div>
-
-            <div class="nav-section">
-                <h3>Architecture</h3>
-                <a href="#structure" class="nav-link">Structure du Projet</a>
-                <a href="#functions" class="nav-link">Fonctions</a>
-                <a href="#data" class="nav-link">Structure des Données</a>
-            </div>
-
-            <div class="nav-section">
-                <h3>Ressources</h3>
-                <a href="#examples" class="nav-link">Exemples</a>
-                <a href="#troubleshooting" class="nav-link">Dépannage</a>
-            </div>
-        </nav>
-
-        <main class="content">
-            <div class="header">
-                <h1>📋 Gestionnaire de Tâches en C++</h1>
-                <p>Documentation complète du système de gestion de tâches utilisant JSON et la bibliothèque nlohmann/json</p>
-            </div>
-
-            <section id="introduction" class="section">
-                <h2>📖 Introduction</h2>
-                <div class="card">
-                    <p>Ce projet est un gestionnaire de tâches (TODO List) développé en C++ qui permet de créer, lire, mettre à jour, supprimer et gérer des tâches stockées dans un fichier JSON. Le programme offre une interface en ligne de commande avec un affichage coloré pour une meilleure expérience utilisateur.</p>
+<body class="bg-white">
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="fixed top-0 left-0 h-screen w-64 border-r border-slate-200 bg-white overflow-y-auto">
+            <div class="p-8">
+                <div class="mb-8">
+                    <h1 class="text-xl font-bold text-slate-900">TODO Manager</h1>
+                    <p class="text-sm text-slate-600 mt-1">Documentation v1.0</p>
                 </div>
 
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <h4>🎨 Interface Colorée</h4>
-                        <p>Affichage avec codes ANSI pour une meilleure lisibilité</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>💾 Persistance JSON</h4>
-                        <p>Stockage des données dans un format JSON standard</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>⚡ Performance</h4>
-                        <p>Opérations rapides sur les tâches</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>🔍 Recherche Facile</h4>
-                        <p>Recherche de tâches par ID</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="installation" class="section">
-                <h2>⚙️ Installation</h2>
-                
-                <h3>Prérequis</h3>
-                <ul style="margin-left: 2rem; color: var(--text-secondary);">
-                    <li>Compilateur C++ (g++, clang++)</li>
-                    <li>Bibliothèque nlohmann/json</li>
-                    <li>Standard C++11 ou supérieur</li>
-                </ul>
-
-                <h3>Installation de nlohmann/json</h3>
-                
-                <div class="code-block">
-                    <code># Ubuntu/Debian<br>sudo apt-get install nlohmann-json3-dev<br><br># macOS<br>brew install nlohmann-json<br><br># Ou télécharger le fichier header unique depuis:<br># https://github.com/nlohmann/json</code>
-                </div>
-            </section>
-
-            <section id="compilation" class="section">
-                <h2>🔨 Compilation</h2>
-                
-                <div class="code-block">
-                    <code>g++ -std=c++11 main.cpp -o todo<br><br># Avec optimisations<br>g++ -std=c++11 -O2 main.cpp -o todo</code>
-                </div>
-
-                <div class="alert alert-info">
-                    <strong>💡 Note :</strong> Assurez-vous que le fichier <span class="command">output.json</span> est dans le même répertoire que l'exécutable, ou il sera créé automatiquement.
-                </div>
-            </section>
-
-            <section id="create" class="section">
-                <h2>✨ Commande: create</h2>
-                
-                <div class="card">
-                    <span class="badge badge-success">POST</span>
-                    <h3>Description</h3>
-                    <p>Crée une nouvelle tâche avec un titre spécifié. L'ID est généré automatiquement en incrémentant le dernier ID existant.</p>
-
-                    <h3>Syntaxe</h3>
-                    <div class="code-block">
-                        <code>./todo create <span class="param">&lt;titre&gt;</span></code>
+                <nav class="space-y-8">
+                    <div>
+                        <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-wide mb-3">Démarrage</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#introduction" class="text-sm text-slate-700 hover:text-slate-900 block">Introduction</a></li>
+                            <li><a href="#installation" class="text-sm text-slate-700 hover:text-slate-900 block">Installation</a></li>
+                            <li><a href="#compilation" class="text-sm text-slate-700 hover:text-slate-900 block">Compilation</a></li>
+                        </ul>
                     </div>
 
-                    <h3>Paramètres</h3>
-                    <ul class="param-list">
-                        <li><span class="param-name">titre</span> : Le titre de la tâche (chaîne de caractères)</li>
+                    <div>
+                        <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-wide mb-3">Commandes</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#create" class="text-sm text-slate-700 hover:text-slate-900 block">create</a></li>
+                            <li><a href="#read" class="text-sm text-slate-700 hover:text-slate-900 block">read</a></li>
+                            <li><a href="#update" class="text-sm text-slate-700 hover:text-slate-900 block">update</a></li>
+                            <li><a href="#delete" class="text-sm text-slate-700 hover:text-slate-900 block">delete</a></li>
+                            <li><a href="#check" class="text-sm text-slate-700 hover:text-slate-900 block">check</a></li>
+                            <li><a href="#search" class="text-sm text-slate-700 hover:text-slate-900 block">search</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-wide mb-3">Architecture</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#structure" class="text-sm text-slate-700 hover:text-slate-900 block">Structure</a></li>
+                            <li><a href="#functions" class="text-sm text-slate-700 hover:text-slate-900 block">Fonctions</a></li>
+                            <li><a href="#data" class="text-sm text-slate-700 hover:text-slate-900 block">Données</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-wide mb-3">Ressources</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#examples" class="text-sm text-slate-700 hover:text-slate-900 block">Exemples</a></li>
+                            <li><a href="#troubleshooting" class="text-sm text-slate-700 hover:text-slate-900 block">Dépannage</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1">
+            <div class="max-w-5xl mx-auto px-8 py-16">
+                <!-- Header -->
+                <header class="mb-16">
+                    <h1 class="text-5xl font-bold text-slate-900 mb-4">Gestionnaire de Tâches</h1>
+                    <p class="text-xl text-slate-600">Un système de gestion de tâches en C++ utilisant JSON pour la persistance des données.</p>
+                </header>
+
+                <!-- Introduction -->
+                <section id="introduction" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Introduction</h2>
+                    <p class="text-lg text-slate-700 mb-6">Ce projet est un gestionnaire de tâches développé en C++ qui permet de créer, lire, mettre à jour, supprimer et gérer des tâches stockées dans un fichier JSON.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div class="border border-slate-200 rounded-lg p-6">
+                            <h3 class="font-semibold text-slate-900 mb-2">Interface CLI</h3>
+                            <p class="text-sm text-slate-600">Interface en ligne de commande simple et intuitive avec affichage coloré.</p>
+                        </div>
+                        <div class="border border-slate-200 rounded-lg p-6">
+                            <h3 class="font-semibold text-slate-900 mb-2">Persistance JSON</h3>
+                            <p class="text-sm text-slate-600">Stockage des données dans un format JSON standard et lisible.</p>
+                        </div>
+                        <div class="border border-slate-200 rounded-lg p-6">
+                            <h3 class="font-semibold text-slate-900 mb-2">CRUD Complet</h3>
+                            <p class="text-sm text-slate-600">Toutes les opérations de base : Create, Read, Update, Delete.</p>
+                        </div>
+                        <div class="border border-slate-200 rounded-lg p-6">
+                            <h3 class="font-semibold text-slate-900 mb-2">Gestion d'État</h3>
+                            <p class="text-sm text-slate-600">Suivi du statut de complétion de chaque tâche.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Installation -->
+                <section id="installation" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Installation</h2>
+                    
+                    <h3 class="text-xl font-semibold text-slate-900 mt-8 mb-3">Prérequis</h3>
+                    <ul class="list-disc list-inside text-slate-700 space-y-2">
+                        <li>Compilateur C++ (g++, clang++)</li>
+                        <li>Bibliothèque nlohmann/json</li>
+                        <li>Standard C++11 ou supérieur</li>
                     </ul>
 
-                    <h3>Exemple</h3>
-                    <div class="code-block">
-                        <code>./todo create "Acheter du pain"<br><br># Sortie:<br><span style="color: #10b981;">✓ Task created successfully!</span><br><span style="color: #06b6d4;">  ID: 1</span><br><span style="color: #06b6d4;">  Title: </span>Acheter du pain</code>
+                    <h3 class="text-xl font-semibold text-slate-900 mt-8 mb-3">Installation de nlohmann/json</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-sm text-slate-800"><code># Ubuntu/Debian
+sudo apt-get install nlohmann-json3-dev
+
+# macOS
+brew install nlohmann-json
+
+# Ou télécharger depuis GitHub
+# https://github.com/nlohmann/json</code></pre>
+                    </div>
+                </section>
+
+                <!-- Compilation -->
+                <section id="compilation" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Compilation</h2>
+                    <p class="text-slate-700 mb-4">Compilez le programme avec les commandes suivantes :</p>
+                    
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-sm text-slate-800"><code>g++ -std=c++11 main.cpp -o todo
+
+# Avec optimisations
+g++ -std=c++11 -O2 main.cpp -o todo</code></pre>
                     </div>
 
-                    <h3>Fonction Associée</h3>
-                    <div class="function-signature">
-                        void Create(const Item &task, json &j)
+                    <div class="mt-4 bg-sky-50 border border-sky-200 rounded-lg p-4">
+                        <p class="text-sm text-sky-900"><strong>Note :</strong> Le fichier output.json sera créé automatiquement s'il n'existe pas.</p>
                     </div>
-                    <p>Ajoute une nouvelle tâche au tableau JSON et incrémente le compteur global.</p>
-                </div>
-            </section>
+                </section>
 
-            <section id="read" class="section">
-                <h2>📚 Commande: read</h2>
-                
-                <div class="card">
-                    <span class="badge badge-info">GET</span>
-                    <h3>Description</h3>
-                    <p>Affiche toutes les tâches stockées dans le fichier JSON avec un formatage lisible.</p>
+                <!-- Create Command -->
+                <section id="create" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">create</h2>
+                    <p class="text-slate-700 mb-4">Crée une nouvelle tâche avec un titre spécifié.</p>
 
-                    <h3>Syntaxe</h3>
-                    <div class="code-block">
-                        <code>./todo read</code>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">./todo create &lt;titre&gt;</code>
                     </div>
 
-                    <h3>Exemple</h3>
-                    <div class="code-block">
-                        <code>./todo read<br><br># Sortie:<br><span style="color: #3b82f6;">═══════════════════════════</span><br><span style="color: #3b82f6;">    JSON File Content</span><br><span style="color: #3b82f6;">═══════════════════════════</span><br><br>[<br>    {<br>        "Id": 1,<br>        "Title": "Acheter du pain",<br>        "Completed": false<br>    }<br>]</code>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Paramètres</h3>
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200">
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètre</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Type</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-slate-200">
+                                <td class="py-3 px-4 text-sm text-slate-700"><code>titre</code></td>
+                                <td class="py-3 px-4 text-sm text-slate-700">string</td>
+                                <td class="py-3 px-4 text-sm text-slate-700">Le titre de la tâche</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-sm text-slate-800"><code>./todo create "Acheter du pain"
+
+# Sortie:
+✓ Task created successfully!
+  ID: 1
+  Title: Acheter du pain</code></pre>
                     </div>
 
-                    <h3>Fonction Associée</h3>
-                    <div class="function-signature">
-                        void Read(json &j)
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">void Create(const Item &task, json &j)</code>
                     </div>
-                    <p>Affiche le contenu complet du fichier JSON avec une indentation de 4 espaces.</p>
-                </div>
-            </section>
+                    <p class="text-sm text-slate-600 mt-2">Ajoute une nouvelle tâche au tableau JSON et incrémente le compteur.</p>
+                </section>
 
-            <section id="update" class="section">
-                <h2>✏️ Commande: update</h2>
-                
-                <div class="card">
-                    <span class="badge badge-warning">PUT</span>
-                    <h3>Description</h3>
-                    <p>Met à jour le titre d'une tâche existante en spécifiant son ID.</p>
+                <!-- Read Command -->
+                <section id="read" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">read</h2>
+                    <p class="text-slate-700 mb-4">Affiche toutes les tâches stockées dans le fichier JSON.</p>
 
-                    <h3>Syntaxe</h3>
-                    <div class="code-block">
-                        <code>./todo update <span class="param">&lt;id&gt;</span> <span class="param">&lt;nouveau_titre&gt;</span></code>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">./todo read</code>
                     </div>
 
-                    <h3>Paramètres</h3>
-                    <ul class="param-list">
-                        <li><span class="param-name">id</span> : L'identifiant de la tâche (entier)</li>
-                        <li><span class="param-name">nouveau_titre</span> : Le nouveau titre de la tâche (chaîne)</li>
-                    </ul>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-sm text-slate-800"><code>./todo read
 
-                    <h3>Exemple</h3>
-                    <div class="code-block">
-                        <code>./todo update 1 "Acheter du pain et du lait"<br><br># Sortie:<br><span style="color: #10b981;">✓ Task with ID 1 was updated successfully</span><br><span style="color: #06b6d4;">  New content: </span>Acheter du pain et du lait</code>
+# Sortie:
+═══════════════════════════
+    JSON File Content
+═══════════════════════════
+
+[
+    {
+        "Id": 1,
+        "Title": "Acheter du pain",
+        "Completed": false
+    }
+]</code></pre>
                     </div>
 
-                    <h3>Fonction Associée</h3>
-                    <div class="function-signature">
-                        void Update(json &j, int id, string content)
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">void Read(json &j)</code>
                     </div>
-                    <p>Parcourt le tableau JSON, trouve la tâche avec l'ID correspondant et met à jour son titre.</p>
-                </div>
-            </section>
+                    <p class="text-sm text-slate-600 mt-2">Affiche le contenu du fichier JSON avec une indentation de 4 espaces.</p>
+                </section>
 
-            <section id="delete" class="section">
-                <h2>🗑️ Commande: delete</h2>
-                
-                <div class="card">
-                    <span class="badge badge-danger">DELETE</span>
-                    <h3>Description</h3>
-                    <p>Supprime une tâche du système en utilisant son identifiant unique.</p>
+                <!-- Update Command -->
+                <section id="update" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">update</h2>
+                    <p class="text-slate-700 mb-4">Met à jour le titre d'une tâche existante.</p>
 
-                    <h3>Syntaxe</h3>
-                    <div class="code-block">
-                        <code>./todo delete <span class="param">&lt;id&gt;</span></code>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">./todo update &lt;id&gt; &lt;nouveau_titre&gt;</code>
                     </div>
 
-                    <h3>Paramètres</h3>
-                    <ul class="param-list">
-                        <li><span class="param-name">id</span> : L'identifiant de la tâche à supprimer (entier)</li>
-                    </ul>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Paramètres</h3>
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200">
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètre</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Type</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-slate-200">
+                                <td class="py-3 px-4 text-sm text-slate-700"><code>id</code></td>
+                                <td class="py-3 px-4 text-sm text-slate-700">int</td>
+                                <td class="py-3 px-4 text-sm text-slate-700">L'identifiant de la tâche</td>
+                            </tr>
+                            <tr class="border-b border-slate-200">
+                                <td class="py-3 px-4 text-sm text-slate-700"><code>nouveau_titre</code></td>
+                                <td class="py-3 px-4 text-sm text-slate-700">string</td>
+                                <td class="py-3 px-4 text-sm text-slate-700">Le nouveau titre</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                    <h3>Exemple</h3>
-                    <div class="code-block">
-                        <code>./todo delete 1<br><br># Sortie:<br><span style="color: #10b981;">✓ Task with ID 1 was deleted successfully</span></code>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-sm text-slate-800"><code>./todo update 1 "Acheter du pain et du lait"
+
+# Sortie:
+✓ Task with ID 1 was updated successfully
+  New content: Acheter du pain et du lait</code></pre>
                     </div>
 
-                    <h3>Fonction Associée</h3>
-                    <div class="function-signature">
-                        void Delete(json &j, int id)
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">void Update(json &j, int id, string content)</code>
                     </div>
-                    <p>Utilise un itérateur pour parcourir le tableau et supprimer l'élément correspondant à l'ID.</p>
-                </div>
-            </section>
+                    <p class="text-sm text-slate-600 mt-2">Parcourt le tableau JSON et met à jour le titre de la tâche correspondante.</p>
+                </section>
 
-            <section id="check" class="section">
-                <h2>✅ Commande: check</h2>
-                
-                <div class="card">
-                    <span class="badge badge-success">PATCH</span>
-                    <h3>Description</h3>
-                    <p>Bascule le statut de complétion d'une tâche (complétée ↔ non complétée).</p>
+                <!-- Delete Command -->
+                <section id="delete" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">delete</h2>
+                    <p class="text-slate-700 mb-4">Supprime une tâche du système.</p>
 
-                    <h3>Syntaxe</h3>
-                    <div class="code-block">
-                        <code>./todo check <span class="param">&lt;id&gt;</span></code>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">./todo delete &lt;id&gt;</code>
                     </div>
 
-                    <h3>Paramètres</h3>
-                    <ul class="param-list">
-                        <li><span class="param-name">id</span> : L'identifiant de la tâche (entier)</li>
-                    </ul>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Paramètres</h3>
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200">
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètre</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Type</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-slate-200">
+                                <td class="py-3 px-4 text-sm text-slate-700"><code>id</code></td>
+                                <td class="py-3 px-4 text-sm text-slate-700">int</td>
+                                <td class="py-3 px-4 text-sm text-slate-700">L'identifiant de la tâche à supprimer</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                    <h3>Exemples</h3>
-                    <div class="code-block">
-                        <code># Marquer comme complétée<br>./todo check 1<br><span style="color: #10b981;">✓ Task with ID 1 marked as Completed</span><br><br># Marquer comme non complétée<br>./todo check 1<br><span style="color: #10b981;">✓ Task with ID 1 marked as Not Completed</span></code>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-sm text-slate-800"><code>./todo delete 1
+
+# Sortie:
+✓ Task with ID 1 was deleted successfully</code></pre>
                     </div>
 
-                    <h3>Fonction Associée</h3>
-                    <div class="function-signature">
-                        void check(json &j, int id)
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">void Delete(json &j, int id)</code>
                     </div>
-                    <p>Inverse la valeur booléenne du champ "Completed" de la tâche spécifiée.</p>
-                </div>
-            </section>
+                    <p class="text-sm text-slate-600 mt-2">Utilise un itérateur pour supprimer l'élément correspondant à l'ID.</p>
+                </section>
 
-            <section id="search" class="section">
-                <h2>🔍 Commande: search</h2>
-                
-                <div class="card">
-                    <span class="badge badge-info">GET</span>
-                    <h3>Description</h3>
-                    <p>Recherche et affiche les détails d'une tâche spécifique par son ID.</p>
+                <!-- Check Command -->
+                <section id="check" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">check</h2>
+                    <p class="text-slate-700 mb-4">Bascule le statut de complétion d'une tâche.</p>
 
-                    <h3>Syntaxe</h3>
-                    <div class="code-block">
-                        <code>./todo search <span class="param">&lt;id&gt;</span></code>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">./todo check &lt;id&gt;</code>
                     </div>
 
-                    <h3>Paramètres</h3>
-                    <ul class="param-list">
-                        <li><span class="param-name">id</span> : L'identifiant de la tâche à rechercher (entier)</li>
-                    </ul>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Paramètres</h3>
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200">
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètre</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Type</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-slate-200">
+                                <td class="py-3 px-4 text-sm text-slate-700"><code>id</code></td>
+                                <td class="py-3 px-4 text-sm text-slate-700">int</td>
+                                <td class="py-3 px-4 text-sm text-slate-700">L'identifiant de la tâche</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                    <h3>Exemple</h3>
-                    <div class="code-block">
-                        <code>./todo search 1<br><br># Sortie:<br><span style="color: #c084fc;">═══ Task Details ═══</span><br><span style="color: #06b6d4;">ID: </span>1<br><span style="color: #06b6d4;">Title: </span>Acheter du pain<br><span style="color: #06b6d4;">Status: </span><span style="color: #eab308;">○ Not Completed</span><br><span style="color: #c084fc;">═══════════════════</span></code>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-sm text-slate-800"><code># Marquer comme complétée
+./todo check 1
+✓ Task with ID 1 marked as Completed
+
+# Marquer comme non complétée
+./todo check 1
+✓ Task with ID 1 marked as Not Completed</code></pre>
                     </div>
 
-                    <h3>Fonction Associée</h3>
-                    <div class="function-signature">
-                        void Search(json &j, int id)
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">void check(json &j, int id)</code>
                     </div>
-                    <p>Parcourt le tableau JSON et affiche les informations formatées de la tâche trouvée.</p>
-                </div>
-            </section>
+                    <p class="text-sm text-slate-600 mt-2">Inverse la valeur booléenne du champ "Completed".</p>
+                </section>
 
-            <section id="structure" class="section">
-                <h2>🏗️ Structure du Projet</h2>
-                
-                <div class="card">
-                    <h3>Structure Item</h3>
-                    <div class="function-signature">
-struct Item {<br>
-    int id;<br>
-    string title;<br>
-    bool completed;<br>
-};</div>
-                    <p>Représente une tâche avec trois attributs principaux : identifiant, titre et statut de complétion.</p>
-                </div>
+                <!-- Search Command -->
+                <section id="search" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">search</h2>
+                    <p class="text-slate-700 mb-4">Recherche et affiche les détails d'une tâche spécifique.</p>
 
-                <div class="card">
-                    <h3>Format JSON</h3>
-                    <p>Les données sont stockées dans <span class="command">output.json</span> avec la structure suivante :</p>
-                    <div class="code-block">
-                        <code>[<br>    {<br>        "Id": 1,<br>        "Title": "Titre de la tâche",<br>        "Completed": false<br>    },<br>    {<br>        "Id": 2,<br>        "Title": "Autre tâche",<br>        "Completed": true<br>    }<br>]</code>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Syntaxe</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">./todo search &lt;id&gt;</code>
                     </div>
-                </div>
-            </section>
 
-            <section id="functions" class="section">
-                <h2>⚙️ Fonctions Principales</h2>
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Fonction</th>
-                            <th>Description</th>
-                            <th>Paramètres</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>getLastItemID()</code></td>
-                            <td>Récupère l'ID de la dernière tâche</td>
-                            <td>const json &j</td>
-                        </tr>
-                        <tr>
-                            <td><code>Create()</code></td>
-                            <td>Crée une nouvelle tâche</td>
-                            <td>const Item &task, json &j</td>
-                        </tr>
-                        <tr>
-                            <td><code>Read()</code></td>
-                            <td>Affiche toutes les tâches</td>
-                            <td>json &j</td>
-                        </tr>
-                        <tr>
-                            <td><code>Update()</code></td>
-                            <td>Met à jour le titre d'une tâche</td>
-                            <td>json &j, int id, string content</td>
-                        </tr>
-                        <tr>
-                            <td><code>Delete()</code></td>
-                            <td>Supprime une tâche</td>
-                            <td>json &j, int id</td>
-                        </tr>
-                        <tr>
-                            <td><code>check()</code></td>
-                            <td>Bascule le statut de complétion</td>
-                            <td>json &j, int id</td>
-                        </tr>
-                        <tr>
-                            <td><code>Search()</code></td>
-                            <td>Recherche une tâche par ID</td>
-                            <td>json &j, int id</td>
-                        </tr>
-                        <tr>
-                            <td><code>addTask()</code></td>
-                            <td>Wrapper pour créer une tâche</td>
-                            <td>json &j, vector&lt;Item&gt; &tasks, string title</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Paramètres</h3>
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200">
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètre</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Type</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-slate-200">
+                                <td class="py-3 px-4 text-sm text-slate-700"><code>id</code></td>
+                                <td class="py-3 px-4 text-sm text-slate-700">int</td>
+                                <td class="py-3 px-4 text-sm text-slate-700">L'identifiant de la tâche à rechercher</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-            <section id="data" class="section">
-                <h2>💾 Gestion des Données</h2>
-                
-                <div class="card">
-                    <h3>Lecture du Fichier</h3>
-                    <p>Au démarrage, le programme :</p>
-                    <ol style="margin-left: 2rem; color: var(--text-secondary);">
-                        <li>Ouvre <span class="command">output.json</span></li>
-                        <li>Parse le contenu JSON</li>
-                        <li>Vérifie que c'est un tableau</li>
-                        <li>Si le fichier n'existe pas ou est invalide, crée un tableau vide</li>
-                    </ol>
-                </div>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Exemple</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-sm text-slate-800"><code>./todo search 1
 
-                <div class="card">
-                    <h3>Écriture du Fichier</h3>
-                    <p>Après chaque commande, le programme :</p>
-                    <ol style="margin-left: 2rem; color: var(--text-secondary);">
-                        <li>Ouvre <span class="command">output.json</span> en mode écriture</li>
-                        <li>Écrit le contenu JSON avec indentation (4 espaces)</li>
-                        <li>Ferme le fichier</li>
-                    </ol>
-                </div>
+# Sortie:
+═══ Task Details ═══
+ID: 1
+Title: Acheter du pain
+Status: ○ Not Completed
+═══════════════════</code></pre>
+                    </div>
 
-                <div class="alert alert-warning">
-                    <strong>⚠️ Important :</strong> Le fichier est complètement réécrit à chaque opération. Assurez-vous d'avoir les permissions nécessaires.
-                </div>
-            </section>
+                    <h3 class="text-lg font-semibold text-slate-900 mt-6 mb-2">Fonction</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                        <code class="text-sm text-slate-800">void Search(json &j, int id)</code>
+                    </div>
+                    <p class="text-sm text-slate-600 mt-2">Parcourt le tableau JSON et affiche les informations de la tâche trouvée.</p>
+                </section>
 
-            <section id="examples" class="section">
-                <h2>📝 Exemples d'Utilisation</h2>
-                
-                <div class="card">
-                    <h3>Scénario Complet</h3>
-                    <div class="code-block">
-                        <code># 1. Créer des tâches<br>./todo create "Faire les courses"<br>./todo create "Appeler le dentiste"<br>./todo create "Réviser pour l'examen"<br><br># 2. Voir toutes les tâches<br>./todo read<br><br># 3. Marquer une tâche comme complétée<br>./todo check 1<br><br># 4. Mettre à jour une tâche<br>./todo update 2 "Prendre RDV chez le dentiste"<br>
+                <!-- Structure -->
+                <section id="structure" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Structure du Projet</h2>
+                    
+                    <h3 class="text-xl font-semibold text-slate-900 mt-8 mb-3">Structure Item</h3>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-sm text-slate-800"><code>struct Item {
+    int id;
+    string title;
+    bool completed;
+};</code></pre>
+                    </div>
+                    <p class="text-slate-600 mt-3">Représente une tâche avec trois attributs : identifiant, titre et statut de complétion.</p>
+
+                    <h3 class="text-xl font-semibold text-slate-900 mt-8 mb-3">Format JSON</h3>
+                    <p class="text-slate-700 mb-4">Les données sont stockées dans <code class="text-sm bg-slate-100 px-2 py-1 rounded">output.json</code> :</p>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-sm text-slate-800"><code>[
+    {
+        "Id": 1,
+        "Title": "Titre de la tâche",
+        "Completed": false
+    },
+    {
+        "Id": 2,
+        "Title": "Autre tâche",
+        "Completed": true
+    }
+]</code></pre>
+                    </div>
+                </section>
+
+                <!-- Functions -->
+                <section id="functions" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Fonctions Principales</h2>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-200">
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Fonction</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Description</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-slate-900">Paramètres</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-slate-200">
+                                    <td class="py-3 px-4 text-sm"><code>getLastItemID()</code></td>
+                                    <td class="py-3 px-4 text-sm text-slate-700">Récupère l'ID de la dernière tâche</td>
+                                    <td class="py-3 px-4 text-sm text-slate-600">const json &j</td>
+                                </tr>
+                                <tr class="border-b border-slate-200">
+                                    <td class="py-3 px-4 text-sm"><code>Create()</code></td>
+                                    <td class="py-3 px-4 text-sm text-slate-700">Crée une nouvelle tâche</td>
+                                    <td class="py-3 px-4 text-sm text-slate-600">const Item &task, json &j</td>
